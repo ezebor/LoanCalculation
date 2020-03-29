@@ -1,30 +1,32 @@
-import React, { Fragment, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Form from './components/Form';
 import LoanDetail from './components/LoanDetail';
 import { calculateLoan } from './helpers';
+import Spinner from './components/Spinner';
 
 function App() {
   const [loan, setLoan] = useState(0);
+  const [showSpinner, setShowSpinner] = useState(false);
+
   const amount = useRef();
   const time = useRef();
   const loanIsAble = useRef();
 
   const onSubmit = event => {
     event.preventDefault();
-    const newLoan = calculateLoan(
-      parseFloat(amount.current.value),
-      parseInt(time.current.value)
-    );
-    setLoan(newLoan);
-    cleanForm(event);
-  };
-
-  const cleanForm = event => {
-    amount.current.value = '';
-    time.current.value = '';
-    handleChange(event);
+    setShowSpinner(true);
+    setTimeout(() => {
+      setShowSpinner(false);
+    }, 2000);
+    if (!showSpinner) {
+      const newLoan = calculateLoan(
+        parseFloat(amount.current.value),
+        parseInt(time.current.value)
+      );
+      setLoan(newLoan);
+    }
   };
 
   const handleChange = event => {
@@ -33,8 +35,15 @@ function App() {
       '' === amount.current.value || '' === time.current.value;
   };
 
+  let LoanSubmission;
+  if (showSpinner) {
+    LoanSubmission = <Spinner />;
+  } else {
+    LoanSubmission = <LoanDetail loan={loan} amount={amount} time={time} />;
+  }
+
   return (
-    <Fragment>
+    <div className='container'>
       <Header title='Cotizador de precios' />
       <Form
         onSubmit={onSubmit}
@@ -44,8 +53,8 @@ function App() {
         time={time}
         loanIsAble={loanIsAble}
       />
-      <LoanDetail loan={loan} />
-    </Fragment>
+      {LoanSubmission}
+    </div>
   );
 }
 

@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
-import LoanDetail from './LoanDetail';
 
 function Form({ onSubmit, handleChange, loan, amount, time, loanIsAble }) {
-  console.log('holuu');
   return (
     <form onSubmit={onSubmit}>
       <div className='row'>
