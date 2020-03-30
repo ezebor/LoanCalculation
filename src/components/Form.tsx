@@ -1,6 +1,20 @@
 import React, { Fragment } from 'react';
 
-function Form({ onSubmit, handleChange, loan, amount, time, loanIsAble }) {
+interface IForm {
+  onSubmit: any;
+  handleChange: any;
+  amount: any;
+  time: any;
+  loanIsAble: any;
+}
+
+function Form({
+  onSubmit,
+  handleChange,
+  amount,
+  time,
+  loanIsAble
+}: IForm): any {
   return (
     <form onSubmit={onSubmit}>
       <div className='row'>

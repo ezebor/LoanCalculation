@@ -1,4 +1,4 @@
-export function calculateLoan(amount, time) {
+export function calculateLoan(amount: number, time: number): number {
   let totalAmount;
   if (amount <= 1000) {
     totalAmount = amount * 0.25;

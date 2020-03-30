@@ -1,6 +1,10 @@
 import React from 'react';
 
-function Header({ title }) {
+interface IProps {
+  title: string;
+}
+
+function Header({ title }: IProps): any {
   return <h1>{title}</h1>;
 }
 

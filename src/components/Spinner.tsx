@@ -1,7 +1,7 @@
 import React from 'react';
 import './Spinner.css';
 
-function Spinner() {
+function Spinner(): any {
   return (
     <div className='sk-folding-cube'>
       <div className='sk-cube1 sk-cube'></div>

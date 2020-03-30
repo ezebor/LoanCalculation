@@ -6,22 +6,22 @@ import LoanDetail from './components/LoanDetail';
 import { calculateLoan } from './helpers';
 import Spinner from './components/Spinner';
 
-function App() {
-  const [loan, setLoan] = useState(0);
-  const [showSpinner, setShowSpinner] = useState(false);
+function App(): any {
+  const [loan, setLoan]: [number, any] = useState(0);
+  const [showSpinner, setShowSpinner]: [boolean, any] = useState(false);
 
-  const amount = useRef();
-  const time = useRef();
-  const loanIsAble = useRef();
+  const amount: any = useRef();
+  const time: any = useRef();
+  const loanIsAble: any = useRef();
 
-  const onSubmit = event => {
+  const onSubmit = (event: any) => {
     event.preventDefault();
     setShowSpinner(true);
     setTimeout(() => {
       setShowSpinner(false);
     }, 2000);
     if (!showSpinner) {
-      const newLoan = calculateLoan(
+      const newLoan: number = calculateLoan(
         parseFloat(amount.current.value),
         parseInt(time.current.value)
       );
@@ -29,17 +29,23 @@ function App() {
     }
   };
 
-  const handleChange = event => {
+  const handleChange = (event: any) => {
     event.preventDefault();
     loanIsAble.current.disabled =
       '' === amount.current.value || '' === time.current.value;
   };
 
-  let LoanSubmission;
+  let LoanSubmission: any;
   if (showSpinner) {
     LoanSubmission = <Spinner />;
   } else {
-    LoanSubmission = <LoanDetail loan={loan} amount={amount} time={time} />;
+    LoanSubmission = (
+      <LoanDetail
+        loan={loan}
+        amount={amount.current ? parseFloat(amount.current.value) : 0}
+        time={time.current ? parseFloat(time.current.value) : 0}
+      />
+    );
   }
 
   return (
@@ -48,7 +54,6 @@ function App() {
       <Form
         onSubmit={onSubmit}
         handleChange={handleChange}
-        loan={loan}
         amount={amount}
         time={time}
         loanIsAble={loanIsAble}
